@@ -1,0 +1,378 @@
+<div [@routerTransition]>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-2">
+        <div class="card text-white bg-secondary mb-3">
+          <div class="card-header">Node connected</div>
+          <div class="card-body">
+            <h4 class="card-title">{{nbnoeuds}}</h4>
+          </div>
+        </div>
+      </div><!--
+      <div class="col-sm-4"> <br> <br> <br> 
+        <button type="button" class="btn btn-dark btn-lg" (click)="newaccount()">Create node</button>
+      </div>-->
+      <div class="col-sm-2">
+        <div class="row">
+          <div class="col text-left">
+            <div ngbDropdown class="d-inline-block dropdown">
+              <br>
+              <br>
+
+              <button class="btn btn-outline-primary" placement="top-left" ngbDropdownToggle>Wallet {{walletnb}}</button>
+              <div ngbDropdownMenu>
+                <ul>
+                  <li class="dropdown-item" *ngFor="let wallet of wallets"> {{wallet}}</li>
+                </ul>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card text-white bg-secondary mb-3">
+          <div class="card-header">Blocks</div>
+        </div>
+        <mat-table [dataSource]="dataSource" matSort>
+
+          <!--  number Column -->
+          <ng-container matColumnDef="number">
+            <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="customWidth"> No. </mat-header-cell>
+            <mat-cell *matCellDef="let row" [ngClass]="customWidth"> {{row.number}} </mat-cell>
+          </ng-container>
+
+          <!-- hash Column -->
+          <ng-container matColumnDef="hash">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Hash </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.hash}}% </mat-cell>
+          </ng-container>
+
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row (click)="open(content,row)" *matRowDef="let row; columns: displayedColumns;">
+          </mat-row>
+        </mat-table>
+        <mat-paginator #blockpaginator [length]="lengthBlock" [pageSize]="10">
+        </mat-paginator>
+        <ng-template #content let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">Block details</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">difficulty</label>
+              <div class="col-10">
+                <p id="example-text-input" class="col-10 col-form-label">{{ selectedBlock.difficulty }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">extraData</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.extraData }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">gasLimit</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.gasLimit }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">gasUsed</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.gasUsed }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">hash</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.hash }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">miner</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.miner }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">mixHash</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.mixHash }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">nonce</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.nonce }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">number</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.number }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">parentHash</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.parentHash }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">receiptsRoot</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.receiptsRoot }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">sha3Uncles</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.sha3Uncles }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">size</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.size }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">stateRoot</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.stateRoot }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">timestamp</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.timestamp }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">totalDifficulty</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.totalDifficulty }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">transactions</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.transactions }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-5 col-form-label">transactionsRoot</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.transactionsRoot }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">uncles</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedBlock.extraData }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="card text-white bg-secondary mb-3">
+          <div class="card-header">Transaction</div>
+        </div>
+        <mat-table [dataSource]="dataSource1" matSort>
+
+          <!--  number Column -->
+          <ng-container matColumnDef="nonce">
+            <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="customWidth"> Nonce </mat-header-cell>
+            <mat-cell *matCellDef="let row" [ngClass]="customWidth"> {{row.nonce}} </mat-cell>
+          </ng-container>
+
+          <!-- hash Column -->
+          <ng-container matColumnDef="hash">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Hash </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.hash}}% </mat-cell>
+          </ng-container>
+
+
+          <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+          <mat-row (click)="open1(content1,row)" *matRowDef="let row; columns: displayedColumns1;">
+          </mat-row>
+        </mat-table>
+        <mat-paginator #transactionpaginator [length]="lengthTransaction" [pageSize]="10">
+        </mat-paginator>
+        <ng-template #content1 let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">Transaction details</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">blockHash</label>
+              <div class="col-10">
+                <p id="example-text-input" class="col-10 col-form-label">{{ selectedTransaction.blockHash }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">blockNumber</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.blockNumber }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">blockNumberRaw</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.blockNumberRaw }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">chainId</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.chainId }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">creates</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.creates }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">from</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.from }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">gas</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.gas }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">gasPrice</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.gasPrice }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">gasPriceRaw</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.gasPriceRaw }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">gasRaw</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.gasRaw }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">hash</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.hash }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">input</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.input }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">nonce</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.nonce }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">nonceRaw</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.nonceRaw }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">publicKey</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.publicKey }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">r</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.r }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">raw</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.raw }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-5 col-form-label">s</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.s }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">to</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.to }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">transactionIndex</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.transactionIndex }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">transactionIndexRaw</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.transactionIndexRaw }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">v</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.v }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">value</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.value }}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-search-input" class="col-2 col-form-label">valueRaw</label>
+              <div class="col-10">
+                <p id="example-search-input" class="col-10 col-form-label">{{ selectedTransaction.valueRaw }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+          </div>
+        </ng-template>
+      </div>
+
+    </div>
+  </div>
+
+</div>

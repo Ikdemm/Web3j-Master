@@ -1,0 +1,84 @@
+<br>
+<div [@routerTransition]>
+<br>
+  <div class="main-content">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title">Smart contract code</h4>
+        </div>
+        <div class="card-body">
+          <div id="typography">
+            <div class="row">
+              <div class="tim-typo">
+                <blockquote class="blockquote">
+                  <p>
+                    pragma solidity ^0.4.16;
+                    <br> contract HelloWorld {{ '{' }}
+                    <br> uint256 counter = 5;
+                    <br> function add() public {{ '{' }}
+                    <br> counter++;
+                    <br> }
+                    <br> function subtract() public {{ '{' }}
+                    <br> counter--;
+                    <br> }
+                    <br> function getCounter() public constant returns (uint256) {{ '{' }}
+                    <br> return counter;
+                    <br> }
+                    <br> }
+                  </p>
+                </blockquote>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="open(content,wallet)">Deploy</button>
+    <a (click)="get_counter()" class="btn btn-info btn-round" *ngIf=(ok)>Get_counter</a>
+    <a (click)="add_counter()" class="btn btn-info btn-round" *ngIf=(ok)>Add_counter</a>
+    <a (click)="substract_counter()" class="btn btn-info btn-round" *ngIf=(ok)>Substract_counter</a>
+    <br> <br>
+
+    <div>
+      <p class="btn btn-success btn-round" *ngIf=(get)>Counter is : {{counter}}</p>
+    </div>
+    <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+          <h4 class="modal-title">Login</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+              <div class="alert alert-danger" *ngIf="!passwordvalid">
+                      <strong>{{ errorLogin }}</strong> 
+                  </div>
+          <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">Wallet</label>
+              <div class="col-10">
+                <select name="selectedHash" id="disabledSelect" class="form-control"[(ngModel)]="selectedHash">
+                  <option value="{{wallet}}" *ngFor="let wallet of wallets" >{{wallet}}</option>
+              </select>              
+            </div>
+            </div> <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">Pass
+              </label>
+              <div class="col-10">
+                <input id="example-text-input" name="pass" type="password" class="col-10 col-form-label" [(ngModel)]="pass"/>
+              </div>
+            </div>
+            <button type="button" class="btn btn-secondary pull-right" (click)="c('Close click')">Close</button>
+  
+            <button type="button" class="btn btn-primary " (click)="submit()">Deploy</button>
+  
+  
+      </div>
+      
+  </ng-template>
+
+
+
+  </div>

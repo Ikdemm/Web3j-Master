@@ -1,0 +1,89 @@
+<div [@routerTransition]>
+  <div class="row">
+    <div class="col-lg-3">
+</div>
+<br>
+    <div class="col-lg-5">
+      <div class="card card-default mb-3">
+          <div class="card-header">
+              <i class="fa fa-bell fa-fw"></i> Wallets
+          </div>
+
+          <div class="card-body">
+            <div class="list-group">
+                <a  class="list-group-item clearfix d-block"*ngFor="let wallet of wallets" (click)="open(content,wallet)">
+                    <i class="fa fa-money fa-fw"></i> {{wallet}}
+                </a>
+            </div>
+          </div>
+      </div>
+
+  </div>
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Login</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+            <div class="alert alert-danger" *ngIf="!passwordvalid">
+                    <strong>Wrong password!</strong> 
+                </div>
+        <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Wallet Hash</label>
+            <div class="col-10">
+              <p id="example-text-input" class="col-10 col-form-label">{{ selectedHash }}</p>
+            </div>
+          </div> <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Pass
+            </label>
+            <div class="col-10">
+              <input id="example-text-input" name="pass" type="password" class="col-10 col-form-label" [(ngModel)]="pass"/>
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary pull-right" (click)="c('Close click')">Close</button>
+
+          <button type="button" class="btn btn-primary " (click)="submit()">Connect</button>
+
+
+    </div>
+    
+</ng-template>
+<div class="col-lg-12">
+<button type="button" class="btn btn-primary" (click)="open1(content1)" >new wallet</button>
+</div>
+
+<ng-template #content1 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">New wallet</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+            <div class="alert alert-danger" *ngIf="!passwordvalid">
+                    <strong>Wrong password!</strong> 
+                </div>
+             <div class="form-group row">
+            <label for="passw" class="col-2 col-form-label">Pass
+            </label>
+            <div class="col-10">
+              <input id="passw" name="pass" type="password" class="col-10 col-form-label" [(ngModel)]="passw"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="repass" class="col-2 col-form-label">repass
+            </label>
+            <div class="col-10">
+              <input id="repass" name="repass" type="password" class="col-10 col-form-label" [(ngModel)]="repass"/>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-primary "(click)="newaccount()" >Create</button>
+
+
+    </div>
+    
+</ng-template>
+</div>
