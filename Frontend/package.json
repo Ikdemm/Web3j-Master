@@ -42,7 +42,7 @@
         "perfect-scrollbar": "1.1.0",
         "popper.js": "1.14.3",
         "rxjs": "^6.1.0",
-        "yarn": "^1.6.0",
+        "yarn": "^1.22.0",
         "zone.js": "^0.8.26"
     },
     "devDependencies": {
